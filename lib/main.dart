@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase/screens/chat_screen.dart';
+import '../screens/auth_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const ChatScreen(),
+      home: const AuthScreen(),
     );
   }
 }
