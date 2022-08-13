@@ -6,13 +6,16 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
+  final bool isLoading;
   final void Function(
     String email,
     String password,
     String username,
     bool isLogin,
+    BuildContext context,
   ) submitForm;
-  const AuthForm({super.key, required this.submitForm});
+  const AuthForm(
+      {super.key, required this.submitForm, required this.isLoading});
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -47,10 +50,12 @@ class _AuthFormState extends State<AuthForm> {
       // print(_userPassword);
 
       widget.submitForm(
-        _userEmail,
-        _userName,
-        _userPassword,
+        //trim is to remove unnecessary spacing in form.
+        _userEmail.trim(),
+        _userName.trim(),
+        _userPassword.trim(),
         _isLogin,
+        context,
       );
       //Selepas disave akan gunakan values untuk send auth request kpd firebase..
     }
@@ -126,10 +131,14 @@ class _AuthFormState extends State<AuthForm> {
                   SizedBox(
                     height: 12,
                   ),
-                  ElevatedButton(
-                    onPressed: _Login,
-                    child: Text(_isLogin ? 'Login' : 'Signup'),
-                  ),
+
+                  //loading indicator
+                  if (widget.isLoading) CircularProgressIndicator(),
+                  if (!widget.isLoading)
+                    ElevatedButton(
+                      onPressed: _Login,
+                      child: Text(_isLogin ? 'Login' : 'Signup'),
+                    ),
                   ElevatedButton(
                     onPressed: () {
                       //Guna setState sebab bila kita tukar login mode akan effect ui
