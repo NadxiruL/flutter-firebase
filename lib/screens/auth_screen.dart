@@ -11,9 +11,21 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  void _submitAuthForm(
+    String email,
+    String username,
+    String password,
+    bool isLogin,
+  ) {
+    //gunakan firebase untuk login atau create user
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).primaryColor, body: AuthForm());
+      backgroundColor: Theme.of(context).primaryColor,
+      body: AuthForm(
+        _submitAuthForm,
+      ),
+    );
   }
 }

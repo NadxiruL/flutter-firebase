@@ -6,7 +6,13 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
-  const AuthForm({super.key});
+  final void Function(
+    String email,
+    String password,
+    String username,
+    bool isLogin,
+  ) submitForm;
+  const AuthForm({super.key, required this.submitForm});
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -17,7 +23,7 @@ class _AuthFormState extends State<AuthForm> {
   final _formkey = GlobalKey<FormState>();
 
 //check kita login mode atau signup mode
-  var isLogin = true;
+  var _isLogin = true;
 
   var _userEmail = '';
   var _userName = '';
@@ -36,9 +42,16 @@ class _AuthFormState extends State<AuthForm> {
     if (isValid) {
       //akan masuk kesemua textfield dan akan trigger function onsaved
       _formkey.currentState!.save();
-      print(_userEmail);
-      print(_userName);
-      print(_userPassword);
+      // print(_userEmail);
+      // print(_userName);
+      // print(_userPassword);
+
+      widget.submitForm(
+        _userEmail,
+        _userName,
+        _userPassword,
+        _isLogin,
+      );
       //Selepas disave akan gunakan values untuk send auth request kpd firebase..
     }
   }
@@ -79,7 +92,7 @@ class _AuthFormState extends State<AuthForm> {
 
                   //Jika x betul , paparkan dua formfied di bawah
                   //Bila tekan already have account , form username tak appear.
-                  if (!isLogin)
+                  if (!_isLogin)
                     TextFormField(
                       key: ValueKey('username'),
                       validator: (value) {
@@ -115,16 +128,16 @@ class _AuthFormState extends State<AuthForm> {
                   ),
                   ElevatedButton(
                     onPressed: _Login,
-                    child: Text(isLogin ? 'Login' : 'Signup'),
+                    child: Text(_isLogin ? 'Login' : 'Signup'),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       //Guna setState sebab bila kita tukar login mode akan effect ui
                       setState(() {
-                        isLogin = !isLogin;
+                        _isLogin = !_isLogin;
                       });
                     },
-                    child: Text(isLogin
+                    child: Text(_isLogin
                         ? 'Create new account'
                         : 'I already have an account'),
                   ),
