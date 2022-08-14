@@ -7,7 +7,11 @@ class Messages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection('chat').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('chat')
+          //susunan latest msj akan duduk paling bawah
+          .orderBy('createdAt', descending: true)
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -16,6 +20,8 @@ class Messages extends StatelessWidget {
         }
         final chatdocs = snapshot.data!.docs;
         return ListView.builder(
+          //akan turkar scroll dari bawah ke atas.
+          reverse: true,
           itemCount: chatdocs.length,
           itemBuilder: (context, index) {
             return Text(chatdocs[index]['text']);
