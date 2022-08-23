@@ -20,6 +20,11 @@ class _NewMessageState extends State<NewMessage> {
   void _sendMessage() async {
     //get current user.
     final user = await FirebaseAuth.instance.currentUser!;
+
+    final userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
     //close keyboard..
     FocusScope.of(context).unfocus();
     //to create new mesej
@@ -31,6 +36,7 @@ class _NewMessageState extends State<NewMessage> {
 
       //add user id to outgoing chat messages.
       'userId': user.uid,
+      'username': userData['username'],
     });
 
 //clear text lepas send.

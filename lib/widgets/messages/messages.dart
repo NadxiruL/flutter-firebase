@@ -38,10 +38,12 @@ class Messages extends StatelessWidget {
                 itemCount: chatdocs.length,
                 itemBuilder: (context, index) {
                   return MessageUi(
+                    username: chatdocs[index]['username'],
                     message: chatdocs[index]['text'],
 
                     //compare if user id sama dengan data
                     isMe: chatdocs[index]['userId'] == futureSnapshot.data!.uid,
+                    keyz: ValueKey(chatdocs[index].id),
                   );
                 },
               );

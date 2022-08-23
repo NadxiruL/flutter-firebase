@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MessageUi extends StatelessWidget {
   final String message;
   final bool isMe;
+  final String username;
   final Key keyz;
 
   const MessageUi(
       {super.key,
       required this.message,
       required this.isMe,
-      required this.keyz});
+      required this.keyz,
+      required this.username});
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +34,37 @@ class MessageUi extends StatelessWidget {
           width: 140,
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-          child: Text(
-            message,
-            //jika isMe betul text kaler biru , kalo bukan user jadi warna lain
-            style: TextStyle(color: isMe ? Colors.blue : Colors.amber),
+          child: Column(
+            crossAxisAlignment:
+                isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+            children: [
+              // FutureBuilder(
+              //     //nak dapatkan username
+              //     future: FirebaseFirestore.instance
+              //         .collection('users')
+              //         .doc(username)
+              //         .get(),
+              //     builder: (context, snapshot) {
+              //       if (snapshot.connectionState == ConnectionState.waiting) {
+              //         return Text('loading....');
+              //       }
+              //       return
+
+              Text(
+                username,
+                // snapshot.data!['username'],
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: isMe ? Colors.blue : Colors.amber),
+              ),
+
+              Text(
+                message,
+                //jika isMe betul text kaler biru , kalo bukan user jadi warna lain
+                style: TextStyle(color: isMe ? Colors.blue : Colors.amber),
+                textAlign: isMe ? TextAlign.end : TextAlign.start,
+              ),
+            ],
           ),
         ),
       ],
