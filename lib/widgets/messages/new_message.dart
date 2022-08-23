@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -16,7 +17,9 @@ class _NewMessageState extends State<NewMessage> {
 
   //fungsi untuk send mesej.
 
-  void _sendMessage() {
+  void _sendMessage() async {
+    //get current user.
+    final user = await FirebaseAuth.instance.currentUser!;
     //close keyboard..
     FocusScope.of(context).unfocus();
     //to create new mesej
@@ -25,6 +28,9 @@ class _NewMessageState extends State<NewMessage> {
 
       //timestamp datang dari firebase
       'createdAt': Timestamp.now(),
+
+      //add user id to outgoing chat messages.
+      'userId': user.uid,
     });
 
 //clear text lepas send.

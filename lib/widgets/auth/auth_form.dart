@@ -77,7 +77,6 @@ class _AuthFormState extends State<AuthForm> {
                   //Email
                   TextFormField(
                     //kegunaan bila kita type sesuatu pada form , dia akan elakkan value pada form lama dekat form lain bila kita switch kepada login / signup
-
                     key: ValueKey('email'),
                     validator: (value) {
                       if (value!.isEmpty || !value.contains('@')) {

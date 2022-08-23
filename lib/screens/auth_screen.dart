@@ -56,12 +56,8 @@ class _AuthScreenState extends State<AuthScreen> {
       if (error.message != null) {
         message = error.message as String;
       }
-      Scaffold.of(context).showBottomSheet((context) {
-        return BottomSheet(
-          builder: (context) => Text(message),
-          onClosing: () {},
-        );
-      });
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
       setState(() {
         _isLoading = false;
       });
