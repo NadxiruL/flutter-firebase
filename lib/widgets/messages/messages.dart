@@ -31,19 +31,20 @@ class Messages extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               }
-              final chatdocs = snapshot.data!.docs;
+              final chatdocs = snapshot.data?.docs;
               return ListView.builder(
                 //akan turkar scroll dari bawah ke atas.
                 reverse: true,
-                itemCount: chatdocs.length,
+                itemCount: chatdocs?.length,
                 itemBuilder: (context, index) {
                   return MessageUi(
-                    username: chatdocs[index]['username'],
-                    message: chatdocs[index]['text'],
+                    username: chatdocs?[index]['username'],
+                    message: chatdocs?[index]['text'],
 
                     //compare if user id sama dengan data
-                    isMe: chatdocs[index]['userId'] == futureSnapshot.data!.uid,
-                    keyz: ValueKey(chatdocs[index].id),
+                    isMe:
+                        chatdocs?[index]['userId'] == futureSnapshot.data?.uid,
+                    keyz: ValueKey(chatdocs?[index].id),
                   );
                 },
               );

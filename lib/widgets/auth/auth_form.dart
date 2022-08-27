@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/pickers/image_picker.dart';
 
@@ -29,6 +31,11 @@ class _AuthFormState extends State<AuthForm> {
   var _userEmail = '';
   var _userName = '';
   var _userPassword = '';
+  File? _userImageFile;
+
+  void _pickedImage(File image) {
+    _userImageFile = image;
+  }
 
   void _Login() {
     //guna _formkey untuk validate form.
@@ -38,6 +45,15 @@ class _AuthFormState extends State<AuthForm> {
 
     //Untuk guna tutup keyboard lepas submit
     FocusScope.of(context).unfocus();
+
+    if (_userImageFile != null && !_isLogin) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Please pick an image.'),
+        backgroundColor: Theme.of(context).errorColor,
+      ));
+      return;
+      //kita tak submit form kalo image tu kosong // not in login form / login mode
+    }
 
     //check jika form itu valid
     if (isValid) {
@@ -72,7 +88,7 @@ class _AuthFormState extends State<AuthForm> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  if (!_isLogin) UserImagePicker(),
+                  if (!_isLogin) UserImagePicker(ImagePickfnc: _pickedImage),
                   //Email
                   TextFormField(
                     //kegunaan bila kita type sesuatu pada form , dia akan elakkan value pada form lama dekat form lain bila kita switch kepada login / signup

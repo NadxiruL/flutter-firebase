@@ -7,7 +7,8 @@ import 'package:image_picker/image_picker.dart';
 //preview image
 
 class UserImagePicker extends StatefulWidget {
-  const UserImagePicker({super.key});
+  final void Function(File pickedImage) ImagePickfnc;
+  const UserImagePicker({super.key, required this.ImagePickfnc});
 
   @override
   State<UserImagePicker> createState() => _UserImagePickerState();
@@ -23,6 +24,8 @@ class _UserImagePickerState extends State<UserImagePicker> {
     setState(() {
       _previewImage = File(image?.path ?? '');
     });
+
+    widget.ImagePickfnc(File(image?.path ?? ''));
   }
 
   @override
