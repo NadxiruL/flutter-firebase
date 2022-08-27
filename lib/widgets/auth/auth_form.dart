@@ -1,9 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/pickers/image_picker.dart';
 
 class AuthForm extends StatefulWidget {
   final bool isLoading;
@@ -74,6 +72,7 @@ class _AuthFormState extends State<AuthForm> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  if (!_isLogin) UserImagePicker(),
                   //Email
                   TextFormField(
                     //kegunaan bila kita type sesuatu pada form , dia akan elakkan value pada form lama dekat form lain bila kita switch kepada login / signup
